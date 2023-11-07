@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+
+int main()
+{
+    int alder;
+    int saldo;
+    string namn;
+    cout << "Valkommen till Kasta tärning! Vanligen ange din alder: " << endl;
+    cin >> alder;
+    if (alder >= 18) {
+        cout << "Valkommen in! Vad heter du?" << endl;
+    }
+    else {
+        cout << "Tyvarr, du ar " << 18-alder << " ar for ung";
+        return 0;
+    }
+
+    cin >> namn;
+    cout << "Hej " << namn << "! Hur mycket vill du satt in pa saldot? (Max 5000)" << endl;
+    cin >> saldo;
+    for (saldo = saldo; saldo>5000;){
+        cout << "Du far hogst satta in 5000kr";
+        cin >> saldo;
+    }
+     cout << namn << ", du har " << saldo << "kr pa saldot" << endl;
+
+    return 0;
+}

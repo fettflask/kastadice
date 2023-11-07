@@ -1,13 +1,13 @@
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 
 int main()
 {
     int alder;
-    int saldo;
     string namn;
-    cout << "Valkommen till Kasta tärning! Vanligen ange din alder: " << endl;
+    cout << "Valkommen till Kasta tarning! Vanligen ange din alder: " << endl;
     cin >> alder;
     if (alder >= 18) {
         cout << "Valkommen in! Vad heter du?" << endl;
@@ -16,15 +16,59 @@ int main()
         cout << "Tyvarr, du ar " << 18-alder << " ar for ung";
         return 0;
     }
-
     cin >> namn;
-    cout << "Hej " << namn << "! Hur mycket vill du satt in pa saldot? (Max 5000)" << endl;
+    cout << "Hej " << namn << "! Hur mycket vill du satta in pa saldot? (Max 5000)" << endl;
+    
+    int saldo;
     cin >> saldo;
-    for (saldo = saldo; saldo>5000;){
-        cout << "Du far hogst satta in 5000kr";
+    while (saldo>5000){
+        cout << "Du far hogst satta in 5000kr" << endl;
         cin >> saldo;
     }
      cout << namn << ", du har " << saldo << "kr pa saldot" << endl;
+    
+    int sats = 0;
+    int satsid;
+    cout << "Ange din satsning (Skriv siffran som star innan summan)" << endl << "1. 100kr" << endl << "2. 300kr" << endl << "3. 500kr" << endl;
+    cin >> satsid;
+    while (satsid>3){
+        cout << "Du maste ange ett tillgangligt val, 1, 2 eller 3" << endl;
+        cin >> satsid;
+    }
+    switch (satsid) {
+        case 1:
+            cout << "Du satsade 100 kr" << endl;
+            sats = 100;
+            saldo = saldo-sats;
+            break;
+        case 2:
+            cout << "Du satsade 300 kr" << endl;
+            sats = 300;
+            saldo = saldo-sats;
+            break;
+        case 3: 
+            cout << "Du satsade 500 kr" << endl;
+            sats = 500;
+            saldo = saldo-sats;
+            break;   
+    }
+    cout << "TARNINGSSLAG!!!" << endl << "==============" << endl;
+
+    int spelare = 0;
+    int cpu = 0;
+    while (spelare==cpu){
+        srand(time(0));
+        spelare = rand() % 6 + 1;
+        cpu = rand() % 6 + 1;
+    }
+    cout << "Du slog: " << spelare << endl;
+    cout << "Motstandaren slog: " << cpu << endl;
+    if (spelare>cpu){
+        cout << "Du vann omgangen" << endl;
+    }
+    else{
+        cout << "Du forlorande omgangen" << endl;
+    }
 
     return 0;
 }

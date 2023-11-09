@@ -76,7 +76,7 @@ int main()
                 }   
             } while (cinOK == true);
 
-        if (satsid>3 || satsid <1){
+        if (satsid>3 || satsid <1){  //Checkar så att man anger ett val som finns
             cout << "Du maste ange ett tillgangligt val, 1, 2 eller 3" << endl;
             goto satscheck;
         }

@@ -1,5 +1,5 @@
 #include <iostream>
-#include <ctime>
+#include <ctime>  //Biblotek för random funktionen
 using namespace std;
 
 
@@ -13,62 +13,63 @@ int main()
     
     
     cout << "Valkommen till Kasta tarning! Vanligen ange din alder: " << endl;
-    do {
+    do {  
     cin >> alder;
     cinOK = cin.fail();
-    if (cinOK == true){
+    if (cinOK == true){  //Checkar så att rätt typ av värde matas in med hjälp av cin.fail()
         cin.clear();
         cin.ignore(1000, '\n');
         cout << "Du kan bara ange siffror" << endl;
     }
     } while (cinOK == true);
 
-    if (alder >= 18) {
+    if (alder >= 18) {  //Checkar om åldern är 18 eller över
         cout << "Valkommen in! Vad heter du?" << endl;
     }
-    else {
+    else {  //Sparkar ut för unga användare
         cout << "Tyvarr, du ar " << 18-alder << " ar for ung";
         return 0;
     }
-    cin >> namn;
+    cin >> namn;  //Namn för personalisering
     cout << "Valkommen " << namn << "!" << endl << endl; 
     
-    play:
-    while (saldo<100){
+    play:  //goto för att spela igen
+    while (saldo<100){  //Har man mindre än 100kr så måste man sätta in mer pengar
         cout << "Du maste ha minst 100kr pa kontot, vanligen satt in mer pengar (MAX 5000)" << endl;
         int insatt = 0;
         insattcheck:
         do {
             cin >> insatt;
             cinOK = cin.fail();
-            if (cinOK == true){
+            if (cinOK == true){  //cin.fail() check 
                 cin.clear();
                 cin.ignore(1000, '\n');
                 cout << "Du kan bara ange siffror" << endl;
                 }   
             } while (cinOK == true);
     
-        if (insatt>5000){
+
+        if (insatt>5000){  //Checkar så att inte mer än 5000 sätts in
             cout << "Du far hogst satta in 5000kr" << endl;
-            goto insattcheck;
+            goto insattcheck;  //skickar tillbaka så användaren kan ge nytt värde
         }
 
     saldo = saldo + insatt;
     cout << namn << ", du har " << saldo << "kr pa kontot" << endl;
     } 
 
+
     int sats;
     int satsid;
     bool block = true;
 
-    while (block==true){
+    while (block==true){  //block som håller en inom loopen
         cout << "Ange din satsning (Skriv siffran som star innan summan)" << endl << "1. 100kr" << endl << "2. 300kr" << endl << "3. 500kr" << endl;
-        cin >> satsid;
         satscheck:
         do {
             cin >> satsid;
             cinOK = cin.fail();
-            if (cinOK == true){
+            if (cinOK == true){  //cin.fail() check
                 cin.clear();
                 cin.ignore(1000, '\n');
                 cout << "Du kan bara ange siffror" << endl;
@@ -81,26 +82,23 @@ int main()
         }
 
         switch (satsid) {
-            case 1:
-                cout << "Du satsade 100 kr" << endl;
+            case 1:  //satsar 100kr
                 sats = 100;
                 block=false;
                 break;
-            case 2:
-                cout << "Du satsade 300 kr" << endl;
+            case 2:  //satsar 300kr
                 sats = 300;
-                if (saldo<sats){
-                    cout << "Du har inte tillrackligt med perngar!" << endl;
+                if (saldo<sats){  //Om satsen är större än saldot så blockas man från att gå vidare och skickas tillbaka i loopen
+                    cout << "Du har inte tillrackligt med pengar!" << endl;
                 }
-                else{
+                else{  //Har man tillräckligt med pengar så avaktiveras blocken
                     block=false;
                 }
                 break;
             case 3: 
-                cout << "Du satsade 500 kr" << endl;
-                sats = 500;
+                sats = 500;  //satsar 500kr
                 if (saldo<sats){
-                    cout << "Du har inte tillrackligt med perngar!" << endl;
+                    cout << "Du har inte tillrackligt med pengar!" << endl;
                 }
                 else{
                     block=false;
@@ -108,48 +106,149 @@ int main()
                 break;   
         }
     }
+    cout << "du satsade " << sats << "kr" << endl;
     saldo = saldo-sats;
-    cout << "TARNINGSSLAG!!!" << endl << "===============" << endl << endl;
+
 
     int spelareVinst = 0;
     int cpuVinst = 0;
     int omgang = 1;
+    srand(time(0));  //skapar ett nytt seed för nummergeneratorn
 
-    srand(time(0));
-    while (spelareVinst<2 && cpuVinst<2)
+    cout << "TARNINGSSLAG!!!" << endl << "===============" << endl << endl;
+    while (spelareVinst<2 && cpuVinst<2)  //Checkar om någon har vunnit 2 omgångar, undviker också onödiga omngångar
     {
-        int spelare = 0; 
+        int spelare = 0; //reset tärningsvärde
         int cpu = 0;
 
-        while (spelare==cpu){
-            spelare = rand() % 6 + 1;
+        while (spelare==cpu){  //Så länge som båda har samma värde så får dom ett nytt värde, undviker oavgjorda omgångar
+            spelare = rand() % 6 + 1;  //Random funktion
             cpu = rand() % 6 + 1;
         }
-        cout << "Omganga " << omgang << endl << "=========" << endl; 
+
+        cout << "Omganga " << omgang << endl << "=========" << endl;  //visar vilken omgång det är
         omgang++;
         cout << "Du slog: " << spelare << endl;
+
+        if(spelare==1){  //Simpel grafik
+            cout << "+-------+ \n"
+                    "|       | \n"
+                    "|   O   | \n"
+                    "|       | \n"
+                    "+-------+ \n";
+            }
+        else if (spelare==2)
+        {
+            cout << "+-------+ \n"
+                    "|     O | \n"
+                    "|       | \n"
+                    "| O     | \n"
+                    "+-------+ \n";
+        }
+        else if (spelare==3)
+        {
+            cout << "+-------+ \n"
+                    "|     O | \n"
+                    "|   O   | \n"
+                    "| O     | \n"
+                    "+-------+ \n";
+        }
+        else if (spelare==4)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "|       | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+        else if (spelare==5)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "|   O   | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+        else if (spelare==6)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "| O   O | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+        
         cout << "Motstandaren slog: " << cpu << endl;
-        if (spelare>cpu){
+
+        if(cpu==1){
+            cout << "+-------+ \n"
+                    "|       | \n"
+                    "|   O   | \n"
+                    "|       | \n"
+                    "+-------+ \n";
+            }
+        else if (cpu==2)
+        {
+            cout << "+-------+ \n"
+                    "|     O | \n"
+                    "|       | \n"
+                    "| O     | \n"
+                    "+-------+ \n";
+        }
+        else if (cpu==3)
+        {
+            cout << "+-------+ \n"
+                    "|     O | \n"
+                    "|   O   | \n"
+                    "| O     | \n"
+                    "+-------+ \n";
+        }
+        else if (cpu==4)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "|       | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+        else if (cpu==5)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "|   O   | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+        else if (cpu==6)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "| O   O | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+
+        if (spelare>cpu){  //checkar om du vann eller förlorade omgången
             cout << "Du vann omgangen" << endl << endl;
-            spelareVinst++;
+            spelareVinst++;  //ger vinst till spelaren
         }
         else{
             cout << "Du forlorande omgangen" << endl << endl;
-            cpuVinst++;
+            cpuVinst++;  //ger vinst till datorn
         }
     }
 
-    if (spelareVinst>cpuVinst){
+    if (spelareVinst>cpuVinst){  //checkar vem som vann hela spelet
         cout << "Grattis! Du vann spelet!" << endl;
-        saldo = saldo + sats*2;
-        vinster = vinster + sats;
+        saldo = saldo + sats*2;  //vinstutdelning
+        vinster = vinster + sats;  //lägger på vinster
     }
     else {
         cout << "Tyvarr, du forlorade. Ge inte upp, forsok igen!" << endl;
-        vinster = vinster - sats;
+        vinster = vinster - sats;  //Tar bort vinster
     }
 
-    if (vinster>=0){
+    if (vinster>=0){  //Checkar om man har vinster eller förluster
     cout << "Du har " << vinster << "kr i vinster" << endl;
     }
     else{
@@ -158,12 +257,12 @@ int main()
     cout << "Du har kvar " << saldo << "kr pa kontot" << endl;
 
     int yesno;
-    cout << "Vill du spela igen?" << endl << "1. Ja" << endl << "2. Nej" << endl;
+    cout << "Vill du spela igen?" << endl << "1. Ja" << endl << "2. Nej" << endl;  //fråga om man vill spela igen
     yesnocheck:
     do {
         cin >> yesno;
         cinOK = cin.fail();
-        if (cinOK == true){
+        if (cinOK == true){ //cin.fail() check
             cin.clear();
             cin.ignore(1000, '\n');
             cout << "Du kan bara ange siffror" << endl;
@@ -176,10 +275,10 @@ int main()
     }
 
     switch (yesno) {
-        case 1:
+        case 1:  //Spela vidare
             goto play;
             break;
-        case 2:
+        case 2:  //Avslutar och visar vinster/förluster
             cout << "Tack for att du spelade " << namn << endl;
             if (vinster>=0){
                 cout << "Du vann " << vinster << "kr";

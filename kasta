@@ -5,10 +5,24 @@ using namespace std;
 
 int main()
 {
+    bool cinOK = false;
+    int vinster = 0;
+    int saldo = 0;
     int alder;
     string namn;
+    
+    
     cout << "Valkommen till Kasta tarning! Vanligen ange din alder: " << endl;
+    do {
     cin >> alder;
+    cinOK = cin.fail();
+    if (cinOK == true){
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Du kan bara ange siffror" << endl;
+    }
+    } while (cinOK == true);
+
     if (alder >= 18) {
         cout << "Valkommen in! Vad heter du?" << endl;
     }
@@ -17,58 +31,162 @@ int main()
         return 0;
     }
     cin >> namn;
-    cout << "Hej " << namn << "! Hur mycket vill du satta in pa saldot? (Max 5000)" << endl;
+    cout << "Valkommen " << namn << "!" << endl << endl; 
     
-    int saldo;
-    cin >> saldo;
-    while (saldo>5000){
-        cout << "Du far hogst satta in 5000kr" << endl;
-        cin >> saldo;
-    }
-     cout << namn << ", du har " << saldo << "kr pa saldot" << endl;
+    play:
+    while (saldo<100){
+        cout << "Du maste ha minst 100kr pa kontot, vanligen satt in mer pengar (MAX 5000)" << endl;
+        int insatt = 0;
+        insattcheck:
+        do {
+            cin >> insatt;
+            cinOK = cin.fail();
+            if (cinOK == true){
+                cin.clear();
+                cin.ignore(1000, '\n');
+                cout << "Du kan bara ange siffror" << endl;
+                }   
+            } while (cinOK == true);
     
-    int sats = 0;
-    int satsid;
-    cout << "Ange din satsning (Skriv siffran som star innan summan)" << endl << "1. 100kr" << endl << "2. 300kr" << endl << "3. 500kr" << endl;
-    cin >> satsid;
-    while (satsid>3){
-        cout << "Du maste ange ett tillgangligt val, 1, 2 eller 3" << endl;
-        cin >> satsid;
-    }
-    switch (satsid) {
-        case 1:
-            cout << "Du satsade 100 kr" << endl;
-            sats = 100;
-            saldo = saldo-sats;
-            break;
-        case 2:
-            cout << "Du satsade 300 kr" << endl;
-            sats = 300;
-            saldo = saldo-sats;
-            break;
-        case 3: 
-            cout << "Du satsade 500 kr" << endl;
-            sats = 500;
-            saldo = saldo-sats;
-            break;   
-    }
-    cout << "TARNINGSSLAG!!!" << endl << "==============" << endl;
+        if (insatt>5000){
+            cout << "Du far hogst satta in 5000kr" << endl;
+            goto insattcheck;
+        }
 
-    int spelare = 0;
-    int cpu = 0;
-    while (spelare==cpu){
-        srand(time(0));
-        spelare = rand() % 6 + 1;
-        cpu = rand() % 6 + 1;
+    saldo = saldo + insatt;
+    cout << namn << ", du har " << saldo << "kr pa kontot" << endl;
+    } 
+
+    int sats;
+    int satsid;
+    bool block = true;
+
+    while (block==true){
+        cout << "Ange din satsning (Skriv siffran som star innan summan)" << endl << "1. 100kr" << endl << "2. 300kr" << endl << "3. 500kr" << endl;
+        cin >> satsid;
+        satscheck:
+        do {
+            cin >> satsid;
+            cinOK = cin.fail();
+            if (cinOK == true){
+                cin.clear();
+                cin.ignore(1000, '\n');
+                cout << "Du kan bara ange siffror" << endl;
+                }   
+            } while (cinOK == true);
+
+        if (satsid>3 || satsid <1){
+            cout << "Du maste ange ett tillgangligt val, 1, 2 eller 3" << endl;
+            goto satscheck;
+        }
+
+        switch (satsid) {
+            case 1:
+                cout << "Du satsade 100 kr" << endl;
+                sats = 100;
+                block=false;
+                break;
+            case 2:
+                cout << "Du satsade 300 kr" << endl;
+                sats = 300;
+                if (saldo<sats){
+                    cout << "Du har inte tillrackligt med perngar!" << endl;
+                }
+                else{
+                    block=false;
+                }
+                break;
+            case 3: 
+                cout << "Du satsade 500 kr" << endl;
+                sats = 500;
+                if (saldo<sats){
+                    cout << "Du har inte tillrackligt med perngar!" << endl;
+                }
+                else{
+                    block=false;
+                }
+                break;   
+        }
     }
-    cout << "Du slog: " << spelare << endl;
-    cout << "Motstandaren slog: " << cpu << endl;
-    if (spelare>cpu){
-        cout << "Du vann omgangen" << endl;
+    saldo = saldo-sats;
+    cout << "TARNINGSSLAG!!!" << endl << "===============" << endl << endl;
+
+    int spelareVinst = 0;
+    int cpuVinst = 0;
+    int omgang = 1;
+
+    srand(time(0));
+    while (spelareVinst<2 && cpuVinst<2)
+    {
+        int spelare = 0; 
+        int cpu = 0;
+
+        while (spelare==cpu){
+            spelare = rand() % 6 + 1;
+            cpu = rand() % 6 + 1;
+        }
+        cout << "Omganga " << omgang << endl << "=========" << endl; 
+        omgang++;
+        cout << "Du slog: " << spelare << endl;
+        cout << "Motstandaren slog: " << cpu << endl;
+        if (spelare>cpu){
+            cout << "Du vann omgangen" << endl << endl;
+            spelareVinst++;
+        }
+        else{
+            cout << "Du forlorande omgangen" << endl << endl;
+            cpuVinst++;
+        }
+    }
+
+    if (spelareVinst>cpuVinst){
+        cout << "Grattis! Du vann spelet!" << endl;
+        saldo = saldo + sats*2;
+        vinster = vinster + sats;
+    }
+    else {
+        cout << "Tyvarr, du forlorade. Ge inte upp, forsok igen!" << endl;
+        vinster = vinster - sats;
+    }
+
+    if (vinster>=0){
+    cout << "Du har " << vinster << "kr i vinster" << endl;
     }
     else{
-        cout << "Du forlorande omgangen" << endl;
+    cout << "Du har " << vinster << "kr i forluster" << endl;
+    }
+    cout << "Du har kvar " << saldo << "kr pa kontot" << endl;
+
+    int yesno;
+    cout << "Vill du spela igen?" << endl << "1. Ja" << endl << "2. Nej" << endl;
+    yesnocheck:
+    do {
+        cin >> yesno;
+        cinOK = cin.fail();
+        if (cinOK == true){
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Du kan bara ange siffror" << endl;
+            }   
+        } while (cinOK == true);
+
+    if (yesno>2 || yesno<1) {
+        cout << "Du maste ange 1(Ja) eller 2(Nej)" << endl;
+        goto yesnocheck;
     }
 
-    return 0;
+    switch (yesno) {
+        case 1:
+            goto play;
+            break;
+        case 2:
+            cout << "Tack for att du spelade " << namn << endl;
+            if (vinster>=0){
+                cout << "Du vann " << vinster << "kr";
+            }
+            else{
+                cout << "Du forlorade " << vinster << "kr";
+            }
+            return 0;
+    }
 }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>  //Biblotek för random funktionen
+#include <cstdlib>
 using namespace std;
 
 
@@ -18,7 +19,7 @@ int main()
     cinOK = cin.fail();
     if (cinOK == true){  //Checkar så att rätt typ av värde matas in med hjälp av cin.fail()
         cin.clear();
-        cin.ignore(1000, '\n');
+        cin.ignore(128, '\n');
         cout << "Du kan bara ange siffror" << endl;
     }
     } while (cinOK == true);
@@ -34,7 +35,7 @@ int main()
     cout << "Valkommen " << namn << "!" << endl << endl; 
     
     play:  //goto för att spela igen
-    while (saldo<100){  //Har man mindre än 100kr så måste man sätta in mer pengar
+    while (saldo<100){  //Har man mindre än 100kr så måste man sätta in mer pengar 
         cout << "Du maste ha minst 100kr pa kontot, vanligen satt in mer pengar (MAX 5000)" << endl;
         int insatt = 0;
         insattcheck:
@@ -229,22 +230,23 @@ int main()
         }
 
         if (spelare>cpu){  //checkar om du vann eller förlorade omgången
-            cout << "Du vann omgangen" << endl << endl;
+            cout << "Du vann omgangen" << endl;
             spelareVinst++;  //ger vinst till spelaren
         }
         else{
-            cout << "Du forlorande omgangen" << endl << endl;
+            cout << "Du forlorande omgangen" << endl;
             cpuVinst++;  //ger vinst till datorn
         }
+        system("pause");
     }
 
     if (spelareVinst>cpuVinst){  //checkar vem som vann hela spelet
-        cout << "Grattis! Du vann spelet!" << endl;
+        cout << endl << "Grattis! Du vann spelet!" << endl;
         saldo = saldo + sats*2;  //vinstutdelning
         vinster = vinster + sats;  //lägger på vinster
     }
     else {
-        cout << "Tyvarr, du forlorade. Ge inte upp, forsok igen!" << endl;
+        cout << endl << "Tyvarr, du forlorade. Ge inte upp, forsok igen!" << endl;
         vinster = vinster - sats;  //Tar bort vinster
     }
 
@@ -281,11 +283,12 @@ int main()
         case 2:  //Avslutar och visar vinster/förluster
             cout << "Tack for att du spelade " << namn << endl;
             if (vinster>=0){
-                cout << "Du vann " << vinster << "kr";
+                cout << "Du vann " << vinster << "kr" << endl;
             }
             else{
-                cout << "Du forlorade " << vinster << "kr";
+                cout << "Du forlorade " << vinster << "kr" << endl;
             }
+            system("pause");
             return 0;
     }
 }

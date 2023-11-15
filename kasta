@@ -12,7 +12,7 @@ int main()
     int alder;
     string namn;
     
-    
+    //Börjar med att fråga spelarens ålder
     cout << "Welcome to dice throws! Please state your age: " << endl;
     do {
         cin >> alder;
@@ -34,7 +34,9 @@ int main()
     cin >> namn;  //Namn för personalisering
     cout << "Welcome " << namn << "!" << endl << endl; 
     
-    play:  //goto för att spela igen
+    
+    play:  //goto för att spela igen (bad solution i know)
+    //Funktion för att sätta i pengar på ett konto
     while (saldo<100){  //Har man mindre än 100kr så måste man sätta in mer pengar 
         cout << "You must have atleast 100kr on your account, please deposit more money (MAX 5000)" << endl;
         int insatt = 0;
@@ -59,11 +61,10 @@ int main()
     cout << namn << ", you have " << saldo << "kr on your account" << endl;
     } 
 
-
+    //Funktion för att satsa pengar
     int sats;
     int satsid;
     bool block = true;
-
     while (block==true){  //block som håller en inom loopen
         cout << "Place your bet! (Type the number before the bet)" << endl << "1. 100kr" << endl << "2. 300kr" << endl << "3. 500kr" << endl;
         satscheck:
@@ -110,7 +111,7 @@ int main()
     cout << "You betted " << sats << "kr" << endl;
     saldo = saldo-sats;
 
-
+    //Funktion för tärningskast
     int spelareVinst = 0;
     int cpuVinst = 0;
     int omgang = 1;
@@ -140,7 +141,7 @@ int main()
         omgang++;
         cout << "You rolled: " << spelareDie1 << " & " << spelareDie2 << endl << "Total: " << spelare << endl;
 
-        if(spelareDie1==1){  //Simpel grafik
+        if(spelareDie1==1){  //Simpel ASCII grafik
             cout << "+-------+ \n"
                     "|       | \n"
                     "|   O   | \n"
@@ -334,7 +335,8 @@ int main()
                     "+-------+ \n";
         }
 
-        if (spelare>cpu){  //checkar om du vann eller förlorade omgången
+        //funktioner som anger vinnare
+        if (spelare>cpu){  //checkar om spelaren vann eller förlorade omgången
             cout << "You won the round!" << endl;
             spelareVinst++;  //ger vinst till spelaren
         }
@@ -363,6 +365,7 @@ int main()
     }
         cout << "You have " << saldo << "kr left on your account" << endl;
 
+    //Funktion för att spela igen
     int yesno;
     cout << "Do you want to play again?" << endl << "1. Yes" << endl << "2. No" << endl;  //fråga om man vill spela igen
     yesnocheck:
@@ -383,7 +386,7 @@ int main()
 
     switch (yesno) {
         case 1:  //Spela vidare
-            goto play;
+            goto play; //bad but it works
             break;
         case 2:  //Avslutar och visar vinster/förluster
             cout << "Thanks for playing " << namn << endl;

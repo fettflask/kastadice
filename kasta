@@ -6,37 +6,37 @@ using namespace std;
 
 int main()
 {
-    bool cinOK = false;
+    bool cinOK;
     int vinster = 0;
     int saldo = 0;
     int alder;
     string namn;
     
     
-    cout << "Valkommen till Kasta tarning! Vanligen ange din alder: " << endl;
-    do {  
-    cin >> alder;
-    cinOK = cin.fail();
-    if (cinOK == true){  //Checkar så att rätt typ av värde matas in med hjälp av cin.fail()
-        cin.clear();
-        cin.ignore(128, '\n');
-        cout << "Du kan bara ange siffror" << endl;
-    }
-    } while (cinOK == true);
+    cout << "Welcome to dice throws! Please state your age: " << endl;
+    do {
+        cin >> alder;
+        cinOK = cin.fail();
+        if (cinOK == true){ //cin.fail() check
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "You can only type numbers" << endl;
+            }   
+        } while (cinOK == true);
 
     if (alder >= 18) {  //Checkar om åldern är 18 eller över
-        cout << "Valkommen in! Vad heter du?" << endl;
+        cout << "Welcome in! What's your name?" << endl;
     }
     else {  //Sparkar ut för unga användare
-        cout << "Tyvarr, du ar " << 18-alder << " ar for ung";
+        cout << "Sorry you're " << 18-alder << " years too young";
         return 0;
     }
     cin >> namn;  //Namn för personalisering
-    cout << "Valkommen " << namn << "!" << endl << endl; 
+    cout << "Welcome " << namn << "!" << endl << endl; 
     
     play:  //goto för att spela igen
     while (saldo<100){  //Har man mindre än 100kr så måste man sätta in mer pengar 
-        cout << "Du maste ha minst 100kr pa kontot, vanligen satt in mer pengar (MAX 5000)" << endl;
+        cout << "You must have atleast 100kr on your account, please deposit more money (MAX 5000)" << endl;
         int insatt = 0;
         insattcheck:
         do {
@@ -45,18 +45,18 @@ int main()
             if (cinOK == true){  //cin.fail() check 
                 cin.clear();
                 cin.ignore(1000, '\n');
-                cout << "Du kan bara ange siffror" << endl;
+                cout << "You can only type numbers" << endl;
                 }   
             } while (cinOK == true);
     
 
         if (insatt>5000){  //Checkar så att inte mer än 5000 sätts in
-            cout << "Du far hogst satta in 5000kr" << endl;
+            cout << "You can at most deposit 5000kr" << endl;
             goto insattcheck;  //skickar tillbaka så användaren kan ge nytt värde
         }
 
     saldo = saldo + insatt;
-    cout << namn << ", du har " << saldo << "kr pa kontot" << endl;
+    cout << namn << ", you have " << saldo << "kr on your account" << endl;
     } 
 
 
@@ -65,7 +65,7 @@ int main()
     bool block = true;
 
     while (block==true){  //block som håller en inom loopen
-        cout << "Ange din satsning (Skriv siffran som star innan summan)" << endl << "1. 100kr" << endl << "2. 300kr" << endl << "3. 500kr" << endl;
+        cout << "Place your bet! (Type the number before the bet)" << endl << "1. 100kr" << endl << "2. 300kr" << endl << "3. 500kr" << endl;
         satscheck:
         do {
             cin >> satsid;
@@ -73,12 +73,12 @@ int main()
             if (cinOK == true){  //cin.fail() check
                 cin.clear();
                 cin.ignore(1000, '\n');
-                cout << "Du kan bara ange siffror" << endl;
+                cout << "You can only type numbers" << endl;
                 }   
             } while (cinOK == true);
 
         if (satsid>3 || satsid <1){  //Checkar så att man anger ett val som finns
-            cout << "Du maste ange ett tillgangligt val, 1, 2 eller 3" << endl;
+            cout << "You must type an available alternative, 1, 2 or 3" << endl;
             goto satscheck;
         }
 
@@ -90,7 +90,7 @@ int main()
             case 2:  //satsar 300kr
                 sats = 300;
                 if (saldo<sats){  //Om satsen är större än saldot så blockas man från att gå vidare och skickas tillbaka i loopen
-                    cout << "Du har inte tillrackligt med pengar!" << endl;
+                    cout << "You don't have enough money!" << endl;
                 }
                 else{  //Har man tillräckligt med pengar så avaktiveras blocken
                     block=false;
@@ -99,7 +99,7 @@ int main()
             case 3: 
                 sats = 500;  //satsar 500kr
                 if (saldo<sats){
-                    cout << "Du har inte tillrackligt med pengar!" << endl;
+                    cout << "You don't have enough money!" << endl;
                 }
                 else{
                     block=false;
@@ -107,7 +107,7 @@ int main()
                 break;   
         }
     }
-    cout << "du satsade " << sats << "kr" << endl;
+    cout << "You betted " << sats << "kr" << endl;
     saldo = saldo-sats;
 
 
@@ -116,29 +116,38 @@ int main()
     int omgang = 1;
     srand(time(0));  //skapar ett nytt seed för nummergeneratorn
 
-    cout << "TARNINGSSLAG!!!" << endl << "===============" << endl << endl;
+    cout << "DICE THROWS!!!" << endl << "===============" << endl << endl;
     while (spelareVinst<2 && cpuVinst<2)  //Checkar om någon har vunnit 2 omgångar, undviker också onödiga omngångar
     {
         int spelare = 0; //reset tärningsvärde
+        int spelareDie1 = 0;
+        int spelareDie2 = 0;
         int cpu = 0;
+        int cpuDie1 = 0;
+        int cpuDie2 = 0;
 
         while (spelare==cpu){  //Så länge som båda har samma värde så får dom ett nytt värde, undviker oavgjorda omgångar
-            spelare = rand() % 6 + 1;  //Random funktion
-            cpu = rand() % 6 + 1;
+            spelareDie1 = rand() % 6 + 1;  //Random funktion
+            spelareDie2 = rand() % 6 + 1;
+            cpuDie1 = rand() % 6 + 1;
+            cpuDie2 = rand() % 6 + 1;
+
+            spelare = spelareDie1 + spelareDie2;
+            cpu = cpuDie1 + cpuDie2;
         }
 
-        cout << "Omganga " << omgang << endl << "=========" << endl;  //visar vilken omgång det är
+        cout << "Round " << omgang << endl << "=========" << endl;  //visar vilken omgång det är
         omgang++;
-        cout << "Du slog: " << spelare << endl;
+        cout << "You rolled: " << spelareDie1 << " & " << spelareDie2 << endl << "Total: " << spelare << endl;
 
-        if(spelare==1){  //Simpel grafik
+        if(spelareDie1==1){  //Simpel grafik
             cout << "+-------+ \n"
                     "|       | \n"
                     "|   O   | \n"
                     "|       | \n"
                     "+-------+ \n";
             }
-        else if (spelare==2)
+        else if (spelareDie1==2)
         {
             cout << "+-------+ \n"
                     "|     O | \n"
@@ -146,7 +155,7 @@ int main()
                     "| O     | \n"
                     "+-------+ \n";
         }
-        else if (spelare==3)
+        else if (spelareDie1==3)
         {
             cout << "+-------+ \n"
                     "|     O | \n"
@@ -154,7 +163,7 @@ int main()
                     "| O     | \n"
                     "+-------+ \n";
         }
-        else if (spelare==4)
+        else if (spelareDie1==4)
         {
             cout << "+-------+ \n"
                     "| O   O | \n"
@@ -162,7 +171,7 @@ int main()
                     "| O   O | \n"
                     "+-------+ \n";
         }
-        else if (spelare==5)
+        else if (spelareDie1==5)
         {
             cout << "+-------+ \n"
                     "| O   O | \n"
@@ -170,7 +179,55 @@ int main()
                     "| O   O | \n"
                     "+-------+ \n";
         }
-        else if (spelare==6)
+        else if (spelareDie1==6)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "| O   O | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+
+        if(spelareDie2==1){
+            cout << "+-------+ \n"
+                    "|       | \n"
+                    "|   O   | \n"
+                    "|       | \n"
+                    "+-------+ \n";
+            }
+        else if (spelareDie2==2)
+        {
+            cout << "+-------+ \n"
+                    "|     O | \n"
+                    "|       | \n"
+                    "| O     | \n"
+                    "+-------+ \n";
+        }
+        else if (spelareDie2==3)
+        {
+            cout << "+-------+ \n"
+                    "|     O | \n"
+                    "|   O   | \n"
+                    "| O     | \n"
+                    "+-------+ \n";
+        }
+        else if (spelareDie2==4)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "|       | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+        else if (spelareDie2==5)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "|   O   | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+        else if (spelareDie2==6)
         {
             cout << "+-------+ \n"
                     "| O   O | \n"
@@ -179,16 +236,16 @@ int main()
                     "+-------+ \n";
         }
         
-        cout << "Motstandaren slog: " << cpu << endl;
+        cout << "Competitor rolled: " << cpuDie1 << " & " << cpuDie2 << endl << "Total: " << cpu << endl;
 
-        if(cpu==1){
+        if(cpuDie1==1){
             cout << "+-------+ \n"
                     "|       | \n"
                     "|   O   | \n"
                     "|       | \n"
                     "+-------+ \n";
             }
-        else if (cpu==2)
+        else if (cpuDie1==2)
         {
             cout << "+-------+ \n"
                     "|     O | \n"
@@ -196,7 +253,7 @@ int main()
                     "| O     | \n"
                     "+-------+ \n";
         }
-        else if (cpu==3)
+        else if (cpuDie1==3)
         {
             cout << "+-------+ \n"
                     "|     O | \n"
@@ -204,7 +261,7 @@ int main()
                     "| O     | \n"
                     "+-------+ \n";
         }
-        else if (cpu==4)
+        else if (cpuDie1==4)
         {
             cout << "+-------+ \n"
                     "| O   O | \n"
@@ -212,7 +269,7 @@ int main()
                     "| O   O | \n"
                     "+-------+ \n";
         }
-        else if (cpu==5)
+        else if (cpuDie1==5)
         {
             cout << "+-------+ \n"
                     "| O   O | \n"
@@ -220,7 +277,55 @@ int main()
                     "| O   O | \n"
                     "+-------+ \n";
         }
-        else if (cpu==6)
+        else if (cpuDie1==6)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "| O   O | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+
+        if(cpuDie2==1){
+            cout << "+-------+ \n"
+                    "|       | \n"
+                    "|   O   | \n"
+                    "|       | \n"
+                    "+-------+ \n";
+            }
+        else if (cpuDie2==2)
+        {
+            cout << "+-------+ \n"
+                    "|     O | \n"
+                    "|       | \n"
+                    "| O     | \n"
+                    "+-------+ \n";
+        }
+        else if (cpuDie2==3)
+        {
+            cout << "+-------+ \n"
+                    "|     O | \n"
+                    "|   O   | \n"
+                    "| O     | \n"
+                    "+-------+ \n";
+        }
+        else if (cpuDie2==4)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "|       | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+        else if (cpuDie2==5)
+        {
+            cout << "+-------+ \n"
+                    "| O   O | \n"
+                    "|   O   | \n"
+                    "| O   O | \n"
+                    "+-------+ \n";
+        }
+        else if (cpuDie2==6)
         {
             cout << "+-------+ \n"
                     "| O   O | \n"
@@ -230,36 +335,36 @@ int main()
         }
 
         if (spelare>cpu){  //checkar om du vann eller förlorade omgången
-            cout << "Du vann omgangen" << endl;
+            cout << "You won the round!" << endl;
             spelareVinst++;  //ger vinst till spelaren
         }
         else{
-            cout << "Du forlorande omgangen" << endl;
+            cout << "You lost the round!" << endl;
             cpuVinst++;  //ger vinst till datorn
         }
         system("pause");
     }
 
     if (spelareVinst>cpuVinst){  //checkar vem som vann hela spelet
-        cout << endl << "Grattis! Du vann spelet!" << endl;
+        cout << endl << "Congratulations! You've won the game!" << endl;
         saldo = saldo + sats*2;  //vinstutdelning
         vinster = vinster + sats;  //lägger på vinster
     }
     else {
-        cout << endl << "Tyvarr, du forlorade. Ge inte upp, forsok igen!" << endl;
+        cout << endl << "Sorry, you've lost. 90'%' of gamblers give up before their big win!" << endl;
         vinster = vinster - sats;  //Tar bort vinster
     }
 
     if (vinster>=0){  //Checkar om man har vinster eller förluster
-    cout << "Du har " << vinster << "kr i vinster" << endl;
+        cout << "You have " << vinster << "kr in gains" << endl;
     }
     else{
-    cout << "Du har " << vinster << "kr i forluster" << endl;
+        cout << "You have " << vinster << "kr in losses" << endl;
     }
-    cout << "Du har kvar " << saldo << "kr pa kontot" << endl;
+        cout << "You have " << saldo << "kr left on your account" << endl;
 
     int yesno;
-    cout << "Vill du spela igen?" << endl << "1. Ja" << endl << "2. Nej" << endl;  //fråga om man vill spela igen
+    cout << "Do you want to play again?" << endl << "1. Yes" << endl << "2. No" << endl;  //fråga om man vill spela igen
     yesnocheck:
     do {
         cin >> yesno;
@@ -267,12 +372,12 @@ int main()
         if (cinOK == true){ //cin.fail() check
             cin.clear();
             cin.ignore(1000, '\n');
-            cout << "Du kan bara ange siffror" << endl;
+            cout << "You can only type numbers" << endl;
             }   
         } while (cinOK == true);
 
     if (yesno>2 || yesno<1) {
-        cout << "Du maste ange 1(Ja) eller 2(Nej)" << endl;
+        cout << "You must type 1(Yes) or 2(No)" << endl;
         goto yesnocheck;
     }
 
@@ -281,9 +386,9 @@ int main()
             goto play;
             break;
         case 2:  //Avslutar och visar vinster/förluster
-            cout << "Tack for att du spelade " << namn << endl;
+            cout << "Thanks for playing " << namn << endl;
             if (vinster>=0){
-                cout << "Du vann " << vinster << "kr" << endl;
+                cout << "You " << vinster << "kr" << endl;
             }
             else{
                 cout << "Du forlorade " << vinster << "kr" << endl;

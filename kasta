@@ -1,5 +1,5 @@
 #include <iostream>
-#include <ctime>  //Biblotek för random funktionen
+#include <ctime>  //Biblotek för random
 #include <cstdlib>
 using namespace std;
 
@@ -36,7 +36,7 @@ int main()
     
     
     play:  //goto för att spela igen (bad solution i know)
-    //Funktion för att sätta i pengar på ett konto
+    //Processs för att sätta i pengar på ett konto
     while (saldo<100){  //Har man mindre än 100kr så måste man sätta in mer pengar 
         cout << "You must have atleast 100kr on your account, please deposit more money (MAX 5000)" << endl;
         int insatt = 0;
@@ -61,7 +61,7 @@ int main()
     cout << namn << ", you have " << saldo << "kr on your account" << endl;
     } 
 
-    //Funktion för att satsa pengar
+    //Process för att satsa pengar
     int sats;
     int satsid;
     bool block = true;
@@ -111,7 +111,7 @@ int main()
     cout << "You betted " << sats << "kr" << endl;
     saldo = saldo-sats;
 
-    //Funktion för tärningskast
+    //Process för tärningskast
     int spelareVinst = 0;
     int cpuVinst = 0;
     int omgang = 1;
@@ -120,14 +120,14 @@ int main()
     cout << "DICE THROWS!!!" << endl << "===============" << endl << endl;
     while (spelareVinst<2 && cpuVinst<2)  //Checkar om någon har vunnit 2 omgångar, undviker också onödiga omngångar
     {
-        int spelare = 0; //reset tärningsvärde
+        int spelare = 0; //initierar och resetar tärningsvärde
         int spelareDie1 = 0;
         int spelareDie2 = 0;
         int cpu = 0;
         int cpuDie1 = 0;
         int cpuDie2 = 0;
 
-        while (spelare==cpu){  //Så länge som båda har samma värde så får dom ett nytt värde, undviker oavgjorda omgångar
+        while (spelare==cpu){  //Så länge som båda tärningarna har samma värde så får dom ett nytt värde, undviker oavgjorda omgångar
             spelareDie1 = rand() % 6 + 1;  //Random funktion
             spelareDie2 = rand() % 6 + 1;
             cpuDie1 = rand() % 6 + 1;
@@ -335,7 +335,7 @@ int main()
                     "+-------+ \n";
         }
 
-        //funktioner som anger vinnare
+        //Process som anger vinnare för omgången
         if (spelare>cpu){  //checkar om spelaren vann eller förlorade omgången
             cout << "You won the round!" << endl;
             spelareVinst++;  //ger vinst till spelaren
@@ -365,7 +365,7 @@ int main()
     }
         cout << "You have " << saldo << "kr left on your account" << endl;
 
-    //Funktion för att spela igen
+    //Process för att spela igen
     int yesno;
     cout << "Do you want to play again?" << endl << "1. Yes" << endl << "2. No" << endl;  //fråga om man vill spela igen
     yesnocheck:
@@ -391,10 +391,10 @@ int main()
         case 2:  //Avslutar och visar vinster/förluster
             cout << "Thanks for playing " << namn << endl;
             if (vinster>=0){
-                cout << "You " << vinster << "kr" << endl;
+                cout << "You've won" << vinster << "kr" << endl;
             }
             else{
-                cout << "Du forlorade " << vinster << "kr" << endl;
+                cout << "You've lost " << vinster << "kr" << endl;
             }
             system("pause");
             return 0;
